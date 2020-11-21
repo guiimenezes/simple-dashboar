@@ -11,6 +11,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import { Button } from '@material-ui/core';
+import api from '../../../services/api'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -52,15 +54,27 @@ export default function UsuariosCadastrados() {
   const [senha, setSenha] = useState('')
   const [tipo, setTipo] = useState('')
 
-  // const [open, setOpen] = React.useState(true);
-  // const handleDrawerOpen = () => {
-  //   setOpen(true);
-  // };
+  async function handleSubmit() {
+    const data = {
+      nome_usuario: nome,
+      email_usuario: email,
+      senha_usuario: senha,
+      tipo_usuario: tipo
+    }
 
-  // const handleDrawerClose = () => {
-  //   setOpen(false);
-  // };
-  // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+    if (nome !== '' && email !== '' && senha !== '' && tipo !== '') {
+      const response = await api.post('/api/usuarios', data)
+      if (response.status === 200) {
+        window.location.href = '/admin/usuarios'
+      } else {
+        alert('Erro ao cadastrar Usuário')
+      }
+    } else {
+      alert('Todos os campos devem ser preenchidos')
+
+    }
+
+  }
 
   return (
     <div className={classes.root}>
@@ -123,8 +137,13 @@ export default function UsuariosCadastrados() {
                       fullWidth
                       autoComplete="senha"
                       value={senha}
-                      onChange={e => setSenha(e.target.senha)}
+                      onChange={e => setSenha(e.target.value)}
                     />
+                  </Grid>
+                  <Grid item sx={12} sm={12}>
+                    <Button variant="contained" color="primary" onClick={handleSubmit}>
+                      Salvar
+                    </Button>
                   </Grid>
                 </Grid>
               </Paper>

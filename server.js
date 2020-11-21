@@ -7,7 +7,7 @@ const routes = require('./src/routes')
 const { route } = require('./src/routes')
 
 const app = express()
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 3001
 
 mongoose.connect('mongodb://localhost:27017/curso-basico-mern', {
   useNewUrlParser: true,
