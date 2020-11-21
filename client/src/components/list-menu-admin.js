@@ -6,8 +6,6 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
-// import BarChartIcon from '@material-ui/icons/BarChart';
-// import LayersIcon from '@material-ui/icons/Layers';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 
 export const mainListItems = (
@@ -18,7 +16,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItem>
-    <ListItem button hred='/admin/usuarios' component='a'>
+    <ListItem button href='/admin/usuarios' component='a'>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
