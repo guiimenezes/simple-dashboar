@@ -14,7 +14,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { Button } from '@material-ui/core';
 import api from '../../../services/api'
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -43,8 +42,6 @@ const useStyles = makeStyles((theme) => ({
     width: "100%"
   }
 }));
-
-
 
 export default function UsuariosCadastrados() {
   const classes = useStyles();
