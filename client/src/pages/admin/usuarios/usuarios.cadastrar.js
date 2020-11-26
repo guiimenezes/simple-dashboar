@@ -61,10 +61,15 @@ export default function UsuariosCadastrados() {
 
     if (nome !== '' && email !== '' && senha !== '' && tipo !== '') {
       const response = await api.post('/api/usuarios', data)
-      if (response.status === 200) {
+      console.log(response.status)
+      if (response.status === 201) {
         window.location.href = '/admin/usuarios'
       } else {
-        alert('Erro ao cadastrar Usuário')
+        if (response.status === 303) {
+          alert('Email já existe na nossa base de dados!')
+        } else {
+          alert('Erro ao cadastrar Usuário')
+        }
       }
     } else {
       alert('Todos os campos devem ser preenchidos')

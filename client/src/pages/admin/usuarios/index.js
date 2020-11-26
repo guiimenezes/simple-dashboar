@@ -58,6 +58,17 @@ export default function UsuariosListagem() {
     loadUsuarios()
   }, [])
 
+  async function handleDelete(id) {
+    if (window.confirm("Deseja realmente excluir o usuário?")) {
+      const result = await api.delete(`/api/usuarios/${id}`)
+      if (result.status === 200) {
+        window.location.href = '/admin/usuarios'
+      } else {
+        alert('Ocorreu algum erro, por favor, tente novamente!')
+      }
+    }
+  }
+
   return (
     <div className={classes.root}>
       {/* MENU DRAWER */}
@@ -99,7 +110,6 @@ export default function UsuariosListagem() {
                                 :
                                 <Chip
                                   label="Funcionário"
-                                  clickable
                                   color="secondary"
                                 />
                               }</TableCell>
@@ -107,7 +117,13 @@ export default function UsuariosListagem() {
                               <TableCell align="right">
                                 <ButtonGroup aria-label="outlined primary button group">
                                   <Button color="primary">Editar</Button>
-                                  <Button color="secondary">Excluir</Button>
+                                  <Button
+                                    color="secondary"
+                                    onClick={() => handleDelete(row._id)}
+                                    title={`Deseja excluir ${row.nome_usuario}?`}
+                                  >
+                                    Excluir
+                                    </Button>
                                 </ButtonGroup>
                               </TableCell>
                             </TableRow>
@@ -127,6 +143,6 @@ export default function UsuariosListagem() {
           </Box>
         </Container>
       </main>
-    </div>
+    </div >
   );
 }
