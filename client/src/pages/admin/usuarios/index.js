@@ -19,6 +19,7 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 import Chip from '@material-ui/core/Chip';
+import { getNomeTipo, getNomeTipoLabel } from '../../../functions/static_data'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -101,18 +102,12 @@ export default function UsuariosListagem() {
                                 {row.nome_usuario}
                               </TableCell>
                               <TableCell align="center">{row.email_usuario}</TableCell>
-                              <TableCell align="center">{row.tipo_usuario === 1
-                                ?
+                              <TableCell align="center">
                                 <Chip
-                                  label="Administrador"
-                                  color="primary"
+                                  label={getNomeTipo(row.tipo_usuario)}
+                                  color={getNomeTipoLabel(row.tipo_usuario)}
                                 />
-                                :
-                                <Chip
-                                  label="Funcionário"
-                                  color="secondary"
-                                />
-                              }</TableCell>
+                              </TableCell>
                               <TableCell align="center">{new Date(row.createdAt).toLocaleString("pt-br")}</TableCell>
                               <TableCell align="right">
                                 <ButtonGroup aria-label="outlined primary button group">
