@@ -15,6 +15,8 @@ import ProdutosCadastrar from './pages/admin/produtos/produtos.cadastrar'
 import Home from './pages/client/home'
 import ProdutoDetails from './pages/client/produtos/produtos.details'
 
+import Login from './pages/admin/login'
+
 export default function Routes() {
   return (
     <BrowserRouter>
@@ -26,6 +28,7 @@ export default function Routes() {
 
         {/* ROTA ADMIN */}
         <Route path='/admin' exact component={Dashboard} />
+        <Route path='/admin/login' exact component={Login} />
 
         <Route path='/admin/usuarios' exact component={Usuarios} />
         <Route path='/admin/usuarios/cadastrar' exact component={UsuariosCadastrar} />
