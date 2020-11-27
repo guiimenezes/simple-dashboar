@@ -17,6 +17,8 @@ import ProdutoDetails from './pages/client/produtos/produtos.details'
 
 import Login from './pages/admin/login'
 
+import PrivateRoute from './services/wAuth'
+
 export default function Routes() {
   return (
     <BrowserRouter>
@@ -27,16 +29,16 @@ export default function Routes() {
         <Route path='/produtos/:idProduto' exact component={ProdutoDetails} />
 
         {/* ROTA ADMIN */}
-        <Route path='/admin' exact component={Dashboard} />
         <Route path='/admin/login' exact component={Login} />
+        <PrivateRoute path='/admin' exact component={Dashboard} />
 
-        <Route path='/admin/usuarios' exact component={Usuarios} />
-        <Route path='/admin/usuarios/cadastrar' exact component={UsuariosCadastrar} />
-        <Route path='/admin/usuarios/editar/:idUsuario' exact component={UsuariosEditar} />
+        <PrivateRoute path='/admin/usuarios' exact component={Usuarios} />
+        <PrivateRoute path='/admin/usuarios/cadastrar' exact component={UsuariosCadastrar} />
+        <PrivateRoute path='/admin/usuarios/editar/:idUsuario' exact component={UsuariosEditar} />
 
-        <Route path='/admin/produtos' exact component={Produtos} />
-        <Route path='/admin/produtos/cadastrar' exact component={ProdutosCadastrar} />
-        <Route path='/admin/produtos/editar/:idProduto' exact component={ProdutosEditar} />
+        <PrivateRoute path='/admin/produtos' exact component={Produtos} />
+        <PrivateRoute path='/admin/produtos/cadastrar' exact component={ProdutosCadastrar} />
+        <PrivateRoute path='/admin/produtos/editar/:idProduto' exact component={ProdutosEditar} />
 
       </Switch>
     </BrowserRouter>
