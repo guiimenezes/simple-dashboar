@@ -13,6 +13,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { CssBaseline } from '@material-ui/core';
 
+import { getNomeUsuario } from '../services/auth'
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -103,6 +105,7 @@ export default function MenuAdmin({ title }) {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             {title}
           </Typography>
+          {getNomeUsuario()}
           {/* <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
             <NotificationsIcon />
@@ -118,6 +121,8 @@ export default function MenuAdmin({ title }) {
         open={open}
       >
         <div className={classes.toolbarIcon}>
+          {/* Abaixo importa a imagem de LOGOMARCA, lembrese de importar o local da imagem */}
+          {/* <img src={} alt="" style={{ width: 150, height: 50 }} */}
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
