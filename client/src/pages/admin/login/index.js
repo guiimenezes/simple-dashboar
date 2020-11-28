@@ -70,7 +70,7 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false)
 
   async function handleSubmit() {
-
+    setLoading(true)
     await api.post('/api/usuarios/login', { email, senha })
       .then(res => {
         if (res.status === 200) {
@@ -88,13 +88,6 @@ export default function SignIn() {
           setLoading(false)
         }
       })
-  }
-
-  function loadSubmit() {
-    setLoading(true)
-    setTimeout(
-      () => handleSubmit(), 1500
-    )
   }
 
   return (
@@ -150,7 +143,7 @@ export default function SignIn() {
           variant="contained"
           color="primary"
           className={classes.submit}
-          onClick={loadSubmit}
+          onClick={handleSubmit}
           disabled={loading}
         >
           {loading ? <CircularProgress /> : "Entrar"}

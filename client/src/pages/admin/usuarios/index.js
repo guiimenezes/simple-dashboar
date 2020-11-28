@@ -21,6 +21,9 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Chip from '@material-ui/core/Chip';
 import { getNomeTipo, getNomeTipoLabel } from '../../../functions/static_data'
 
+import LinearProgress from '@material-ui/core/LinearProgress';
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -50,12 +53,15 @@ export default function UsuariosListagem() {
   const classes = useStyles();
 
   const [usuario, setUsuario] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function loadUsuarios() {
       const response = await api.get('/api/usuarios')
       setUsuario(response.data)
+      setLoading(false)
     }
+    // setTimeout(() => loadUsuarios(), 1000)
     loadUsuarios()
   }, [])
 
@@ -85,51 +91,55 @@ export default function UsuariosListagem() {
                   <Grid item xs={12} sm={12}>
 
                     <TableContainer component={Paper}>
-                      <Table className={classes.table} aria-label="simple table">
-                        <TableHead>
-                          <TableRow>
-                            <TableCell>Nome</TableCell>
-                            <TableCell align="center">E-mail</TableCell>
-                            <TableCell align="center">Tipo</TableCell>
-                            <TableCell align="center">Data de Cadastro</TableCell>
-                            <TableCell align="right">Opções</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {usuario.map((row) => (
-                            <TableRow key={row._id}>
-                              <TableCell component="th" scope="row">
-                                {row.nome_usuario}
-                              </TableCell>
-                              <TableCell align="center">{row.email_usuario}</TableCell>
-                              <TableCell align="center">
-                                <Chip
-                                  label={getNomeTipo(row.tipo_usuario)}
-                                  color={getNomeTipoLabel(row.tipo_usuario)}
-                                />
-                              </TableCell>
-                              <TableCell align="center">{new Date(row.createdAt).toLocaleString("pt-br")}</TableCell>
-                              <TableCell align="right">
-                                <ButtonGroup aria-label="outlined primary button group">
-                                  <Button
-                                    color="primary"
-                                    href={`/admin/usuarios/editar/${row._id}`}
-                                  >
-                                    Editar
+                      {loading
+                        ? <LinearProgress style={{ width: '50%', margin: '20px auto' }} />
+                        : (
+                          <Table className={classes.table} aria-label="simple table">
+                            <TableHead>
+                              <TableRow>
+                                <TableCell>Nome</TableCell>
+                                <TableCell align="center">E-mail</TableCell>
+                                <TableCell align="center">Tipo</TableCell>
+                                <TableCell align="center">Data de Cadastro</TableCell>
+                                <TableCell align="right">Opções</TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {usuario.map((row) => (
+                                <TableRow key={row._id}>
+                                  <TableCell component="th" scope="row">
+                                    {row.nome_usuario}
+                                  </TableCell>
+                                  <TableCell align="center">{row.email_usuario}</TableCell>
+                                  <TableCell align="center">
+                                    <Chip
+                                      label={getNomeTipo(row.tipo_usuario)}
+                                      color={getNomeTipoLabel(row.tipo_usuario)}
+                                    />
+                                  </TableCell>
+                                  <TableCell align="center">{new Date(row.createdAt).toLocaleString("pt-br")}</TableCell>
+                                  <TableCell align="right">
+                                    <ButtonGroup aria-label="outlined primary button group">
+                                      <Button
+                                        color="primary"
+                                        href={`/admin/usuarios/editar/${row._id}`}
+                                      >
+                                        Editar
                                   </Button>
-                                  <Button
-                                    color="secondary"
-                                    onClick={() => handleDelete(row._id)}
-                                    title={`Deseja excluir ${row.nome_usuario}?`}
-                                  >
-                                    Excluir
+                                      <Button
+                                        color="secondary"
+                                        onClick={() => handleDelete(row._id)}
+                                        title={`Deseja excluir ${row.nome_usuario}?`}
+                                      >
+                                        Excluir
                                     </Button>
-                                </ButtonGroup>
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
+                                    </ButtonGroup>
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        )}
                     </TableContainer>
 
                   </Grid>
