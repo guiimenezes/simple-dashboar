@@ -25,6 +25,9 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -64,8 +67,10 @@ export default function SignIn() {
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   async function handleSubmit() {
+
     await api.post('/api/usuarios/login', { email, senha })
       .then(res => {
         if (res.status === 200) {
@@ -77,10 +82,19 @@ export default function SignIn() {
           } else if (res.data.status === 2) {
             alert('Atenção! ' + res.data.error)
           }
+          setLoading(false)
         } else {
           alert('Erro no servidor')
+          setLoading(false)
         }
       })
+  }
+
+  function loadSubmit() {
+    setLoading(true)
+    setTimeout(
+      () => handleSubmit(), 1500
+    )
   }
 
   return (
@@ -107,19 +121,6 @@ export default function SignIn() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        {/* <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Digite sua senha"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-          value={senha}
-          onChange={e => setSenha(e.target.value)}
-        /> */}
 
         <FormControl variant="outlined" style={{ width: '100%', marginTop: 10 }}>
           <InputLabel htmlFor="campoSenha">Digite sua senha</InputLabel>
@@ -149,10 +150,11 @@ export default function SignIn() {
           variant="contained"
           color="primary"
           className={classes.submit}
-          onClick={handleSubmit}
+          onClick={loadSubmit}
+          disabled={loading}
         >
-          Entrar
-          </Button>
+          {loading ? <CircularProgress /> : "Entrar"}
+        </Button>
 
         {/* </form> */}
       </div>
